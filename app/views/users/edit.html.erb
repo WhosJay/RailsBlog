@@ -1,0 +1,21 @@
+<%= button_to("Log Out", logout_users_path, method: :delete) %>
+Edit:
+<%= form_for @user do |f| %>
+
+  <%= f.label "E-mail: " %>
+  <%= f.email_field :email %>
+
+  <%= f.label "Username: " %>
+  <%= f.text_field :username %>
+
+  <%= f.label "Password: " %>
+  <%= f.password_field :password %>
+
+  <%= f.label "Re-type Password: " %>
+  <%= f.password_field :password2 %>
+
+  <%= f.submit "Update" %>
+<% end %>
+
+Delete your account:
+<%= button_to("Delete", user_path(current_user.id), method: :delete, data: {confirm: "Your account will be DELETED, ok?"}) %>

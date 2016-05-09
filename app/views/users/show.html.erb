@@ -1,0 +1,34 @@
+<%= button_to("Log Out", logout_users_path, method: :delete) %>
+<h1>Welcome <%= current_user.username %></h1>
+Member for <%= distance_of_time_in_words(Time.now,  current_user.created_at) %>
+<br>
+<b>Contact: </b><%= current_user.email %>
+<%= button_to("Edit", edit_user_path(current_user.id), method: :get) %>
+<br>
+<b>Would you like to write a post?</b>
+<%= form_tag("/posts")do %>
+  <%= label_tag "Title:" %>
+  <br>
+  <%= text_area_tag(:title, nil, size: "50x1")%>
+  <br>
+  <%= label_tag "Body:" %>
+  <br>
+  <%= text_area_tag(:body, nil, size: "50x4")%>
+  <br>
+  <%= submit_tag "Post" %>
+<% end %>
+<br>
+<h3>Your posts:</h3>
+<% @posts.reverse.each do |post| %>
+  <% if post.user == current_user %>
+    <a href="/posts/<%=post.id%>">
+      <%= post.title %>
+    </a>	
+  	<br>
+    <%= post.body %>
+    <br>
+  	Posted <%= distance_of_time_in_words(Time.now,  post.created_at) %> | <%= link_to("Delete", post_path(post.id), method: :delete, data: {confirm: "Your post will be DELETED, ok?"}) %> | <%= link_to("Edit", edit_post_path(post.id), method: :get) %>
+    <br>
+    <br>
+  <% end %>
+<% end %>

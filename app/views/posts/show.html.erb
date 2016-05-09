@@ -1,0 +1,69 @@
+<% if current_user == nil %>
+  Login:
+<%= form_tag("/users", action: "index", method: "get")do %>
+
+  <%= label_tag "E-mail: " %>
+  <%= email_field_tag :email %>
+
+  <%= label_tag "Password: " %>
+  <%= password_field_tag :password %>
+
+  <%= submit_tag "Log in" %>
+<% end %>
+
+Sign-up:
+<%= form_tag("/users")do %>
+
+  <%= label_tag "E-mail: " %>
+  <%= email_field_tag :email %>
+
+  <%= label_tag "Username: " %>
+  <%= text_field_tag :username %>
+
+  <%= label_tag "Password: " %>
+  <%= password_field_tag :password %>
+
+  <%= label_tag "Re-type Password: " %>
+  <%= password_field_tag :password2 %>
+
+  <%= submit_tag "Submit" %>
+<% end %>
+
+<% end %>
+
+<% if current_user != nil %>
+<%= button_to("Log Out", logout_users_path, method: :delete) %>
+<% end %>
+
+<h1><%= @post.title %></h1>
+Posted <%= distance_of_time_in_words(Time.now, @post.created_at) %>
+<br>
+by: <a href="/users/<%=@post.user.id%>/profile">
+  <%= @post.user.username %>
+</a>
+<% if current_user != nil && current_user.id == @post.user.id %>
+| <%= link_to("Delete", post_path(@post.id), method: :delete, data: {confirm: "Your post will be DELETED, ok?"}) %> | <%= link_to("Edit", edit_post_path(@post.id), method: :get) %>
+<% end %>
+<br>
+<br>
+<%= @post.body %>
+<br>
+<br>
+<h4>Comments: </h4>
+<% @post.comments.each do |comment| %>
+	<% if @post.id == comment.post_id %>
+		<%= comment.combody %>
+	<% end %>
+<% end %>
+<br>
+<br>
+<% if current_user != nil %>
+<%= form_tag("/comments")do %>
+
+  <%= label_tag "Would you like to post a comment: " %>
+  <br>
+  <%= text_area_tag(:combody, nil, size: "50x4" )%>
+  <br>
+  <%= submit_tag "Submit" %>
+<% end %>
+<% end %>

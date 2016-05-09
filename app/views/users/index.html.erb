@@ -1,0 +1,55 @@
+<% if current_user == nil %>
+  Login:
+<%= form_tag("/users", action: "index", method: "get")do %>
+
+  <%= label_tag "E-mail: " %>
+  <%= email_field_tag :email %>
+
+  <%= label_tag "Password: " %>
+  <%= password_field_tag :password %>
+
+  <%= submit_tag "Log in" %>
+<% end %>
+
+Sign-up:
+<%= form_tag("/users")do %>
+
+  <%= label_tag "E-mail: " %>
+  <%= email_field_tag :email %>
+
+  <%= label_tag "Username: " %>
+  <%= text_field_tag :username %>
+
+  <%= label_tag "Password: " %>
+  <%= password_field_tag :password %>
+
+  <%= label_tag "Re-type Password: " %>
+  <%= password_field_tag :password2 %>
+
+  <%= submit_tag "Submit" %>
+<% end %>
+
+<% end %>
+
+<% if current_user != nil %>
+<%= button_to("Log Out", logout_users_path, method: :delete) %>
+<% end %>
+
+<h1>Post Feed</h1>
+<% @posts.reverse.each do |post| %>
+  <br>
+  <u>Title</u>: 
+  <a href="/posts/<%=post.id%>">
+    <%= post.title %>
+  </a>
+  <br>
+  <%= post.body %>
+  <br>
+  Posted <%= distance_of_time_in_words(Time.now, post.created_at) %>
+  <br>
+  by: <a href="/users/<%=post.user.id%>/profile">
+    <%= post.user.username %>
+  </a>
+  <br>
+  <br>
+<% end %>
