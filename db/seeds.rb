@@ -6,13 +6,12 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-User.delete_all
-Post.delete_all
-Comment.delete_all
+User.destroy_all
+Post.destroy_all
+Comment.destroy_all
 
 users = []
 posts = []
-comments = []
 
 10.times do
 	
@@ -31,7 +30,7 @@ end
 posts.each do |post|
 
 	3.times do
-		comments << Comment.create(user_id: post.user.id, post_id: post.id, combody: Faker::Lorem.sentences)
+		Comment.create(user_id: users.sample.id, post_id: post.id, combody: Faker::Lorem.sentence)
 	end
 
 end

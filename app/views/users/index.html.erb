@@ -1,55 +1,100 @@
 <% if current_user == nil %>
-  Login:
-<%= form_tag("/users", action: "index", method: "get")do %>
 
-  <%= label_tag "E-mail: " %>
-  <%= email_field_tag :email %>
+<nav>
+  <a class="navlink" href="/">Home</a>
+  <div id="login">
+    <b>Login:</b>
+    <%= form_tag("/users", action: "index", method: "get")do %>
+      <%= label_tag "E-mail: " %>
+      <%= email_field_tag :email %>
+      <%= label_tag "Password: " %>
+      <%= password_field_tag :password %>
+      <%= submit_tag "Log in" %>
+    <% end %>
+  </div>
+</nav>
 
-  <%= label_tag "Password: " %>
-  <%= password_field_tag :password %>
+  <div id="logoff">
+    <div id="logo">
+      <h1>¿Whos Blog?</h1>
+    </div>
 
-  <%= submit_tag "Log in" %>
-<% end %>
-
-Sign-up:
-<%= form_tag("/users")do %>
-
-  <%= label_tag "E-mail: " %>
-  <%= email_field_tag :email %>
-
-  <%= label_tag "Username: " %>
-  <%= text_field_tag :username %>
-
-  <%= label_tag "Password: " %>
-  <%= password_field_tag :password %>
-
-  <%= label_tag "Re-type Password: " %>
-  <%= password_field_tag :password2 %>
-
-  <%= submit_tag "Submit" %>
-<% end %>
+    <div id="signup">
+      <center><h2>Sign-up:</h2></center>
+      <%= form_tag("/users")do %>
+        <%= label_tag "E-mail: " %>
+        <br>
+        <%= email_field_tag :email %>
+        <br>
+        <%= label_tag "Username: " %>
+        <br>
+        <%= text_field_tag :username %>
+        <br>
+        <%= label_tag "Password: " %>
+        <br>
+        <%= password_field_tag :password %>
+        <br>
+        <%= label_tag "Re-type Password: " %>
+        <br>
+        <%= password_field_tag :password2 %>
+        <br>
+        <center><%= submit_tag "Submit" %></center>
+      <% end %>
+    </div>
+  </div>
 
 <% end %>
 
 <% if current_user != nil %>
-<%= button_to("Log Out", logout_users_path, method: :delete) %>
+
+  <nav>
+    <div class="navlink">
+      <a href="/">Home</a>
+    </div>
+    <div class="navlink">
+      <a href="/users/<%=current_user.id%>">My Profile</a>
+    </div>
+    <div id="logout">
+      <%= button_to("Log Out", logout_users_path, method: :delete) %>
+    </div>
+  </nav>
+
+  <div id="divlogo">
+    <div id="logo">
+      <h1>¿Whos Blog?</h1>
+    </div>
+  </div>
+
 <% end %>
 
-<h1>Post Feed</h1>
-<% @posts.reverse.each do |post| %>
+<div id="feed">
+  <center>
+    <h1>¿Post Feed?</h1>
+  </center>
   <br>
-  <u>Title</u>: 
-  <a href="/posts/<%=post.id%>">
-    <%= post.title %>
-  </a>
-  <br>
-  <%= post.body %>
-  <br>
-  Posted <%= distance_of_time_in_words(Time.now, post.created_at) %>
-  <br>
-  by: <a href="/users/<%=post.user.id%>/profile">
-    <%= post.user.username %>
-  </a>
-  <br>
-  <br>
-<% end %>
+  <% @posts.reverse.each do |post| %>
+    <hr>
+    <br>
+    <div id="content">
+      <u>Title</u>: 
+      <a href="/posts/<%=post.id%>">
+        <%= post.title %>
+      </a>
+      <br>
+      <%= post.body %>
+      <br>
+      Posted <%= distance_of_time_in_words(Time.now, post.created_at) %>
+      <br>
+      by: 
+      <a href="/users/<%=post.user.id%>/profile">
+        <%= post.user.username %>
+      </a>
+      <% if current_user != nil && current_user.id == post.user.id %> | 
+        <%= link_to("Delete", post_path(post.id), method: :delete, data: {confirm: "Your post will be DELETED, ok?"}) %> | 
+        <%= link_to("Edit", edit_post_path(post.id), method: :get) %>
+      <% end %>
+      <br>
+      <br>
+    </div>
+  <% end %>
+</div>

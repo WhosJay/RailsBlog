@@ -1,0 +1,19 @@
+h4 {
+	color: white;
+}
+
+#right {
+	float: left;
+	width: 49%;
+	min-height: 1080px;
+	background-color: #298472;
+	padding-left: 5px;
+}
+
+#left {
+	float: left;
+	width: 49%;
+	min-height: 1080px;
+	background-color: #1D5D51;
+	padding-left: 5px;
+}

@@ -1,17 +1,34 @@
-<%= button_to("Log Out", logout_users_path, method: :delete) %>
-Edit:
-<%= form_for @post do |f| %>
+<nav>
+  <div class="navlink">
+    <a href="/">Home</a>
+  </div>
+  <div class="navlink">
+    <a href="/users/<%=current_user.id%>">My Profile</a>
+  </div>
+  <div id="logout">
+    <%= button_to("Log Out", logout_users_path, method: :delete) %>
+  </div>
+</nav>
 
-  <%= f.label "Title: " %>
-  <br>
-  <%= f.text_area :title, cols: "50", rows: "1" %>
-  <br>
-  <%= f.label "Body: " %>
-  <br>
-  <%= f.text_area :body, cols: "50", rows: "4" %>
-  <br>
-  <%= f.submit "Update" %>
-<% end %>
-<br>
-Delete your post:
-<%= button_to("Delete", post_path(@post.id), method: :delete, data: {confirm: "Your post will be DELETED, ok?"}) %>
+<div id="edit">
+	<center>
+		<br>
+		<h4>Edit:</h4>
+		<br>
+		<%= form_for @post do |f| %>
+		  <%= f.label "Title: " %>
+		  <br>
+		  <%= f.text_area :title, cols: "50", rows: "1" %>
+		  <br>
+		  <%= f.label "Body: " %>
+		  <br>
+		  <%= f.text_area :body, cols: "50", rows: "4" %>
+		  <br>
+		  <%= f.submit "Update" %>
+		<% end %>
+		<br>
+		Delete your post:
+		<%= button_to("Delete", post_path(@post.id), method: :delete, data: {confirm: "Your post will be DELETED, ok?"}) %>
+		<br>
+	</center>
+</div>
