@@ -1,13 +1,12 @@
-== README
+== ¿Whos blog? - Jay Hu
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This was a project I worked on while attending NYCDA. This blog was built on Rails, using MVC to achieve full CRUD.
 
-Things you may want to cover:
+Details:
 
-* Ruby version
+* Ruby version - 2.2.4p230
 
-* System dependencies
+* System dependencies - Please run 'Bundle' to make sure you have all the Gems
 
 * Configuration
 
